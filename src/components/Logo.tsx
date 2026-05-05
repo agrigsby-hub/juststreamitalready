@@ -7,28 +7,27 @@ export default function Logo({ size = 64 }: { size?: number }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* Background circle */}
-      <circle cx="32" cy="32" r="32" fill="#1a0a00" />
+      <defs>
+        <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#7c3aed" />
+          <stop offset="100%" stopColor="#2563eb" />
+        </linearGradient>
+        <linearGradient id="grad2" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#a855f7" />
+          <stop offset="100%" stopColor="#3b82f6" />
+        </linearGradient>
+      </defs>
 
-      {/* Film reel outer ring */}
-      <circle cx="32" cy="32" r="28" stroke="#c8952a" strokeWidth="2.5" fill="none" />
+      {/* Background rounded square — app icon shape */}
+      <rect width="64" height="64" rx="16" fill="url(#grad)" />
 
-      {/* Film sprocket holes around the ring */}
-      {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => {
-        const rad = (angle * Math.PI) / 180;
-        const x = 32 + 22 * Math.cos(rad);
-        const y = 32 + 22 * Math.sin(rad);
-        return <circle key={i} cx={x} cy={y} r="2.5" fill="#c8952a" />;
-      })}
+      {/* Play triangle */}
+      <path d="M22 18 L22 46 L48 32 Z" fill="white" />
 
-      {/* Inner circle */}
-      <circle cx="32" cy="32" r="14" fill="#c8952a" opacity="0.15" stroke="#c8952a" strokeWidth="1.5" />
-
-      {/* Play button triangle */}
-      <path
-        d="M27 24.5 L27 39.5 L42 32 Z"
-        fill="#c8952a"
-      />
+      {/* Small speed lines */}
+      <rect x="10" y="20" width="7" height="3" rx="1.5" fill="white" opacity="0.4" />
+      <rect x="8" y="29" width="9" height="3" rx="1.5" fill="white" opacity="0.6" />
+      <rect x="10" y="38" width="7" height="3" rx="1.5" fill="white" opacity="0.4" />
     </svg>
   );
 }

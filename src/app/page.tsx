@@ -64,58 +64,46 @@ export default function Home() {
 
   return (
     <main
-      className="min-h-screen flex flex-col items-center px-4 py-14"
+      className="min-h-screen flex flex-col items-center px-4 py-20"
       style={{ background: "var(--bg)" }}
     >
-      {/* Film strip top bar */}
-      <div className="fixed top-0 left-0 right-0 h-6 flex z-50 overflow-hidden" style={{ background: "#0a0800" }}>
-        {Array.from({ length: 40 }).map((_, i) => (
-          <div
-            key={i}
-            className="shrink-0"
-            style={{
-              width: "32px",
-              height: "100%",
-              borderRight: "4px solid #0a0800",
-              background: i % 2 === 0 ? "#1c1610" : "#0a0800",
-            }}
-          />
-        ))}
-      </div>
+      {/* Subtle gradient glow behind header */}
+      <div
+        className="fixed top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse at top, rgba(124,58,237,0.15) 0%, transparent 70%)",
+        }}
+      />
 
-      <div className="w-full max-w-2xl flex flex-col items-center gap-8 mt-6">
+      <div className="w-full max-w-xl flex flex-col items-center gap-8 relative">
 
         {/* Logo + Title */}
-        <div className="flex flex-col items-center gap-4 text-center">
-          <Logo size={80} />
+        <div className="flex flex-col items-center gap-5 text-center">
+          <Logo size={72} />
           <div>
-            <h1
-              className="text-5xl font-bold tracking-tight"
-              style={{ color: "var(--gold)", fontFamily: "Georgia, serif", letterSpacing: "-0.02em" }}
-            >
-              Just Stream It Already
+            <h1 className="text-4xl font-extrabold tracking-tight text-white">
+              Just Stream It{" "}
+              <span
+                style={{
+                  background: "linear-gradient(90deg, #a855f7, #3b82f6)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
+                Already
+              </span>
             </h1>
-            <p className="mt-2 text-lg" style={{ color: "var(--muted)" }}>
-              Find out where to watch any movie or TV show — right now.
+            <p className="mt-2 text-base" style={{ color: "var(--muted)" }}>
+              Stop googling. Find out where to watch it — right now.
             </p>
           </div>
-        </div>
-
-        {/* Divider */}
-        <div className="w-full flex items-center gap-3">
-          <div className="flex-1 h-px" style={{ background: "var(--border)" }} />
-          <span style={{ color: "var(--muted)", fontSize: "18px" }}>✦</span>
-          <div className="flex-1 h-px" style={{ background: "var(--border)" }} />
         </div>
 
         {/* Search */}
         <div className="w-full relative">
           <div className="flex items-center gap-2">
             <div className="relative flex-1">
-              <span
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-lg pointer-events-none"
-                style={{ color: "var(--gold)" }}
-              >
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg pointer-events-none">
                 🎬
               </span>
               <input
@@ -123,15 +111,20 @@ export default function Home() {
                 value={query}
                 onChange={handleInput}
                 placeholder="Search movies & TV shows..."
-                className="w-full pl-11 pr-5 py-4 rounded-xl text-lg focus:outline-none transition-all"
+                className="w-full pl-11 pr-5 py-4 rounded-xl text-base focus:outline-none transition-all"
                 style={{
                   background: "var(--card)",
                   color: "var(--text)",
                   border: "1.5px solid var(--border)",
-                  caretColor: "var(--gold)",
                 }}
-                onFocus={(e) => (e.target.style.borderColor = "var(--gold)")}
-                onBlur={(e) => (e.target.style.borderColor = "var(--border)")}
+                onFocus={(e) => {
+                  e.target.style.borderColor = "#7c3aed";
+                  e.target.style.boxShadow = "0 0 0 3px rgba(124,58,237,0.15)";
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = "var(--border)";
+                  e.target.style.boxShadow = "none";
+                }}
                 autoFocus
               />
             </div>
@@ -156,41 +149,24 @@ export default function Home() {
         </div>
 
         {loading && (
-          <p style={{ color: "var(--muted)" }} className="text-sm tracking-wide">
-            Searching the archives...
+          <p className="text-sm" style={{ color: "var(--muted)" }}>
+            Looking it up...
           </p>
         )}
 
         {searched && !loading && results.length === 0 && !selected && (
           <p style={{ color: "var(--muted)" }}>
-            No results found for &ldquo;{query}&rdquo;
+            Nothing found for &ldquo;{query}&rdquo;
           </p>
         )}
 
         {selected && <StreamingProviders result={selected} onClear={handleReset} />}
 
-        {/* Footer */}
-        {!selected && (
-          <p className="text-xs mt-8" style={{ color: "var(--muted)" }}>
-            Streaming data powered by TMDB &amp; JustWatch
+        {!selected && !searched && (
+          <p className="text-xs" style={{ color: "var(--muted)", opacity: 0.5 }}>
+            Covers Netflix, Hulu, Max, Disney+, Prime, Apple TV+, Peacock & more
           </p>
         )}
-      </div>
-
-      {/* Film strip bottom bar */}
-      <div className="fixed bottom-0 left-0 right-0 h-6 flex z-50 overflow-hidden" style={{ background: "#0a0800" }}>
-        {Array.from({ length: 40 }).map((_, i) => (
-          <div
-            key={i}
-            className="shrink-0"
-            style={{
-              width: "32px",
-              height: "100%",
-              borderRight: "4px solid #0a0800",
-              background: i % 2 === 0 ? "#1c1610" : "#0a0800",
-            }}
-          />
-        ))}
       </div>
     </main>
   );
